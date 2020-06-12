@@ -3,9 +3,19 @@ import matplotlib.pyplot as plt
 import time
 from scipy.special import erf
 
+""" --------------- Statistics --------------- """
+def moments(x,y):
+    mean = np.sum(x*y)/np.sum(y)
+    variance = np.sum( (x-mean)**2*y )/y.sum()
+    sigma = np.sqrt(variance)
+    skew = np.sum( (x-mean)**3*y ) /sigma**3
+    return mean, sigma, skew
+
 
 """ --------------- Exponentials and Gaussian --------------- """
-def gaussian(x,A,x0,sigma):
+def gaussian(x,A,x0,sigma,norm=False):
+    if norm:
+        return 1/sigma/np.sqrt(2*np.pi)*np.exp(-(x-x0)**2/2/sigma**2)
     return A*np.exp(-(x-x0)**2/2/sigma**2)
 
 
@@ -61,4 +71,4 @@ def ackermann(m,n):
      elif n == 0:
           return ackermann(m - 1, 1)
      else:
-          return ackermann(m - 1, ackermann(m, n - 1)) 
+          return ackermann(m - 1, ackermann(m, n - 1))
